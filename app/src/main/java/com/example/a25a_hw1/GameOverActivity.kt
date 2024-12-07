@@ -11,13 +11,18 @@ class GameOverActivity : AppCompatActivity() {
 
     private lateinit var GameOver_LBL_score: MaterialTextView
     private lateinit var GameOver_BTN_restart: MaterialButton
+    private lateinit var GameOver_LBL_title_screen: MaterialTextView
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_over)
+
         findViews()
         initViews()
     }
+
 
     private fun initViews() {
         val bundle: Bundle? = intent.extras
@@ -32,18 +37,30 @@ class GameOverActivity : AppCompatActivity() {
         }
 
         GameOver_BTN_restart.setOnClickListener {
-            moveBack()
+            reset()
+        }
+
+        GameOver_LBL_title_screen.setOnClickListener {
+            titleScreen()
         }
 
     }
 
-    private fun moveBack() {
+    private fun titleScreen() {
+        val intent = Intent(this@GameOverActivity, TitleScreenActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun reset() {
         val intent = Intent(this@GameOverActivity, MainActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     private fun findViews() {
         GameOver_LBL_score = findViewById(R.id.GameOver_LBL_score)
         GameOver_BTN_restart = findViewById(R.id.GameOver_BTN_restart)
+        GameOver_LBL_title_screen = findViewById(R.id.GameOver_LBL_title_screen)
     }
 }
