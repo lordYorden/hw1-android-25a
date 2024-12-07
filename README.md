@@ -4,7 +4,7 @@
 
 # Sheriff Dodge
 
-An android-kotlin game as HW1of Afeka's `Mobile Apps - 25A10357` Class. 
+An android-kotlin game as HW1 of Afeka's `Mobile Apps - 25A10357` Class. 
 
 
 
