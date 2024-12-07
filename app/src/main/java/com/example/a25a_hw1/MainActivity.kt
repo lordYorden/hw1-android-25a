@@ -150,6 +150,7 @@ class MainActivity : AppCompatActivity() {
         bundle.putString(Constants.BundleKeys.STATUS_KEY, message)
         intent.putExtras(bundle)
         startActivity(intent)
+        finish()
     }
 
     private fun findViews() {
