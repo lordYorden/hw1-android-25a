@@ -103,6 +103,11 @@ class MainActivity : AppCompatActivity() {
         handler.removeCallbacks(runnable)
     }
 
+    override fun onStop() {
+        super.onStop()
+        stopTimer()
+    }
+
     private fun vibratePhone() {
         val vibrator = this.getSystemService(VIBRATOR_SERVICE) as Vibrator
         vibrator.vibrate(VibrationEffect.createOneShot(Constants.GameLogic.VIBRATION_DURATION, VibrationEffect.DEFAULT_AMPLITUDE))

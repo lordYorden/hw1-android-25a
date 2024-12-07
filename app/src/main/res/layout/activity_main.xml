@@ -156,7 +156,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:visibility="invisible"
                 app:srcCompat="@drawable/tumbleweed"
                 android:id="@+id/main_IMG_tumbleweed_4_0"/>
 
@@ -329,7 +328,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:visibility="invisible"
                 app:srcCompat="@drawable/tumbleweed"
                 android:id="@+id/main_IMG_tumbleweed_4_4"/>
 

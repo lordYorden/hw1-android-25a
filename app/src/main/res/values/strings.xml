@@ -3,4 +3,6 @@
     <string name="arrow_left">arrow_left</string>
     <string name="arrow_right">arrow_right</string>
     <string name="restart_button_text">Restart?</string>
+    <string name="game_title">Sheriff Dodge</string>
+    <string name="back_to_titles">No, I want to go back to the title screen</string>
 </resources>
