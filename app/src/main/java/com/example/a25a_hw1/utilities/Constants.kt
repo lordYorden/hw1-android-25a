@@ -4,9 +4,10 @@ class Constants {
 
     object GameLogic {
         const val TUMBLEWEEDS_PER_ROW = 1
-        const val DELAY = 1000L
+        const val DELAY = 500L
         const val DODGE_POINTS = 5
         const val VIBRATION_DURATION = 500L
+        const val TUMBLEWEEDS_STARTING_OFFSET = 3
     }
 
     object BundleKeys {

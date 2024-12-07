@@ -1,5 +1,7 @@
 package com.example.a25a_hw1.model
 
+import com.example.a25a_hw1.utilities.Constants
+
 class ObstacleGenerationManager(private val numLanes: Int, private val tumbleweedsPerRow: Int = 1) {
 
     val currentRow: Array<Boolean>
@@ -7,7 +9,7 @@ class ObstacleGenerationManager(private val numLanes: Int, private val tumblewee
 
     fun generateTumbleweeds(numRows: Int): Array<Array<Boolean>> {
         val tumbleweeds = Array(numRows) { Array(numLanes) { false } }
-        for (i in 0 until numRows-1) {
+        for (i in 0 until numRows-Constants.GameLogic.TUMBLEWEEDS_STARTING_OFFSET) {
             tumbleweeds[i] = generateTumbleweedsRow()
         }
         return tumbleweeds
