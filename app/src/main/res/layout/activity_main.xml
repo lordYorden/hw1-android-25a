@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/background">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="@dimen/hearts_layout_width"
@@ -14,7 +15,8 @@
         android:layout_marginRight="@dimen/default_margin"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:id="@+id/main_LLC_hearts">
+        android:id="@+id/main_LLC_hearts"
+        tools:ignore="RtlHardcoded">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/main_IMG_heart1"
@@ -43,17 +45,8 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/main_FAB_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/default_margin"
-            android:contentDescription="@string/arrow_left"
-            app:srcCompat="@drawable/arrow_left" />
+        android:layout_alignParentBottom="true"
+        android:id="@+id/main_LLC_cowboys">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/main_IMG_cowboy1"
@@ -76,171 +69,225 @@
             android:layout_weight="1"
             app:srcCompat="@drawable/cowboy_small"/>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/main_FAB_right"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cowboy4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/default_margin"
-            android:clickable="true"
-            android:contentDescription="@string/arrow_right"
-            app:srcCompat="@drawable/arrow_right" />
+            android:layout_weight="1"
+            app:srcCompat="@drawable/cowboy_small"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cowboy5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/cowboy_small"/>
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/main_FAB_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_margin="@dimen/default_margin"
+        android:layout_above="@id/main_LLC_cowboys"
+        android:contentDescription="@string/arrow_left"
+        android:layout_alignParentLeft="true"
+        app:srcCompat="@drawable/arrow_left"
+        android:backgroundTint="@color/btn_move"
+        tools:ignore="RtlHardcoded" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/main_FAB_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:layout_above="@id/main_LLC_cowboys"
+        android:layout_alignParentRight="true"
+        android:clickable="true"
+        android:contentDescription="@string/arrow_right"
+        app:srcCompat="@drawable/arrow_right"
+        android:backgroundTint="@color/btn_move"
+        tools:ignore="RtlHardcoded" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_below="@id/main_LLC_hearts">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_weight="1">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed" />
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_0_0"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_1_0"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_2_0"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_3_0"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                android:visibility="invisible"
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_4_0"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_weight="1">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_0_1"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_1_1"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_2_1"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_3_1"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_4_1"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_weight="1">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_0_2"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_1_2"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_2_2"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_3_2"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_4_2"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_weight="1">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_0_3"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_1_3"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_2_3"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_3_3"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_4_3"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -248,37 +295,43 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:visibility="invisible">
+            android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_0_4"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_1_4"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_2_4"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_3_4"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tumbleweed"/>
+                android:visibility="invisible"
+                app:srcCompat="@drawable/tumbleweed"
+                android:id="@+id/main_IMG_tumbleweed_4_4"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

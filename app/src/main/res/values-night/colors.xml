@@ -2,8 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="btn_move">#FFB74D</color>
-    <color name="background">#BBDEFB</color>
-    <color name="text_color">#000000</color>
-
+    <color name="btn_move">#FFA726</color>
+    <color name="background">#283593</color>
+    <color name="text_color">#FFFFFF</color>
 </resources>

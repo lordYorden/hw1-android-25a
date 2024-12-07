@@ -1,14 +1,17 @@
 package com.example.a25a_hw1
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.a25a_l02_03.logic.GameManager
+import com.example.a25a_hw1.logic.GameManager
+import com.example.a25a_hw1.utilities.Constants
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
@@ -18,21 +21,42 @@ class MainActivity : AppCompatActivity() {
     private lateinit var main_IMG_cowboys: Array<AppCompatImageView>
     private lateinit var main_IMG_hearts : Array<AppCompatImageView>
 
+    private lateinit var main_IMG_tumbleweeds : Array<Array<AppCompatImageView>>
     private lateinit var gameManager: GameManager
+    private var numRows: Int = 0
+
+    val handler: Handler = Handler(Looper.getMainLooper())
+
+    private val runnable: Runnable =  object : Runnable{
+        override fun run() {
+            handler.postDelayed(this, Constants.GameLogic.DELAY)
+            gameManager.advanceTumbleweeds()
+            updateUI()
+        }
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         findViews()
-        gameManager = GameManager(main_IMG_hearts.size, main_IMG_cowboys.size)
+        numRows = main_IMG_tumbleweeds.size
         initViews()
     }
 
     private fun initViews() {
+        gameManager = GameManager(main_IMG_hearts.size, main_IMG_cowboys.size, numRows)
+
         main_FAB_right.setOnClickListener({v -> moveRight()})
         main_FAB_left.setOnClickListener({v -> moveLeft()})
+        initTumbleweeds()
         updateUI()
+
+        startTimer()
+    }
+
+    private fun startTimer() {
+        handler.postDelayed(runnable, Constants.GameLogic.DELAY)
     }
 
     private fun moveLeft() {
@@ -45,12 +69,60 @@ class MainActivity : AppCompatActivity() {
         updateUI()
     }
 
+    private fun initTumbleweeds() {
+        displayTumbleweeds()
+
+        for (i in main_IMG_tumbleweeds[main_IMG_tumbleweeds.size-1].indices) {
+            main_IMG_tumbleweeds[main_IMG_tumbleweeds.size-1][i].visibility = View.INVISIBLE
+        }
+    }
+
     private fun updateUI() {
-        //Toast.makeText(this, "${gameManager.cowboyIndex}", Toast.LENGTH_SHORT).show()
         if (gameManager.timesHit != 0) {
             main_IMG_hearts[main_IMG_hearts.size - gameManager.timesHit].visibility = View.INVISIBLE
         }
 
+        displayCowboy()
+        displayTumbleweeds()
+
+        val isHit = gameManager.calcHit()
+
+        if (isHit) {
+            Toast.makeText(this, "Hit", Toast.LENGTH_SHORT).show()
+            vibratePhone()
+        }
+
+        if (gameManager.isGameOver) {
+            Toast.makeText(this, "Game Over", Toast.LENGTH_SHORT).show()
+            stopTimer()
+            changeActivity("Game Over!\nYour Score was:", gameManager.score)
+        }
+    }
+
+    private fun stopTimer() {
+        handler.removeCallbacks(runnable)
+    }
+
+    private fun vibratePhone() {
+        val vibrator = this.getSystemService(VIBRATOR_SERVICE) as Vibrator
+        vibrator.vibrate(VibrationEffect.createOneShot(Constants.GameLogic.VIBRATION_DURATION, VibrationEffect.DEFAULT_AMPLITUDE))
+    }
+
+    private fun displayTumbleweeds() {
+        val tumbleweeds = gameManager.tumbleweeds
+        for (i in tumbleweeds.indices) {
+            for (j in tumbleweeds[i].indices) {
+                if (tumbleweeds[i][j]) {
+                    main_IMG_tumbleweeds[i][j].visibility = View.VISIBLE
+                }
+                else {
+                    main_IMG_tumbleweeds[i][j].visibility = View.INVISIBLE
+                }
+            }
+        }
+    }
+
+    private fun displayCowboy() {
         for (i in main_IMG_cowboys.indices) {
             if (i == gameManager.cowboyIndex) {
                 main_IMG_cowboys[i].visibility = View.VISIBLE
@@ -58,6 +130,15 @@ class MainActivity : AppCompatActivity() {
                 main_IMG_cowboys[i].visibility = View.INVISIBLE
             }
         }
+    }
+
+    private fun changeActivity(message: String, score: Int) {
+        val intent = Intent(this@MainActivity, GameOverActivity::class.java)
+        val bundle = Bundle()
+        bundle.putInt(Constants.BundleKeys.SCORE_KEY, score)
+        bundle.putString(Constants.BundleKeys.STATUS_KEY, message)
+        intent.putExtras(bundle)
+        startActivity(intent)
     }
 
     private fun findViews() {
@@ -70,7 +151,47 @@ class MainActivity : AppCompatActivity() {
         main_IMG_cowboys = arrayOf(
             findViewById(R.id.main_IMG_cowboy1),
             findViewById(R.id.main_IMG_cowboy2),
-            findViewById(R.id.main_IMG_cowboy3)
+            findViewById(R.id.main_IMG_cowboy3),
+            findViewById(R.id.main_IMG_cowboy4),
+            findViewById(R.id.main_IMG_cowboy5)
+        )
+
+        main_IMG_tumbleweeds = arrayOf(
+            arrayOf(
+                findViewById(R.id.main_IMG_tumbleweed_0_0),
+                findViewById(R.id.main_IMG_tumbleweed_0_1),
+                findViewById(R.id.main_IMG_tumbleweed_0_2),
+                findViewById(R.id.main_IMG_tumbleweed_0_3),
+                findViewById(R.id.main_IMG_tumbleweed_0_4)
+            ),
+            arrayOf(
+                findViewById(R.id.main_IMG_tumbleweed_1_0),
+                findViewById(R.id.main_IMG_tumbleweed_1_1),
+                findViewById(R.id.main_IMG_tumbleweed_1_2),
+                findViewById(R.id.main_IMG_tumbleweed_1_3),
+                findViewById(R.id.main_IMG_tumbleweed_1_4)
+            ),
+            arrayOf(
+                findViewById(R.id.main_IMG_tumbleweed_2_0),
+                findViewById(R.id.main_IMG_tumbleweed_2_1),
+                findViewById(R.id.main_IMG_tumbleweed_2_2),
+                findViewById(R.id.main_IMG_tumbleweed_2_3),
+                findViewById(R.id.main_IMG_tumbleweed_2_4)
+            ),
+            arrayOf(
+                findViewById(R.id.main_IMG_tumbleweed_3_0),
+                findViewById(R.id.main_IMG_tumbleweed_3_1),
+                findViewById(R.id.main_IMG_tumbleweed_3_2),
+                findViewById(R.id.main_IMG_tumbleweed_3_3),
+                findViewById(R.id.main_IMG_tumbleweed_3_4)
+            ),
+            arrayOf(
+                findViewById(R.id.main_IMG_tumbleweed_4_0),
+                findViewById(R.id.main_IMG_tumbleweed_4_1),
+                findViewById(R.id.main_IMG_tumbleweed_4_2),
+                findViewById(R.id.main_IMG_tumbleweed_4_3),
+                findViewById(R.id.main_IMG_tumbleweed_4_4)
+            )
         )
 
         main_FAB_right = findViewById(R.id.main_FAB_right)

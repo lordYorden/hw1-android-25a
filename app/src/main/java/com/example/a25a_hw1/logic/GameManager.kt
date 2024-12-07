@@ -1,10 +1,16 @@
-package com.example.a25a_l02_03.logic
+package com.example.a25a_hw1.logic
 
-class GameManager(private val lifeCount: Int = 3, private val numLanes: Int = 3) {
+import com.example.a25a_hw1.model.ObstacleGenerationManager
+import com.example.a25a_hw1.utilities.Constants
+
+class GameManager(private val lifeCount: Int = 3, private val numLanes: Int = 5, private val numRows: Int = 5) {
     var score: Int = 0
         private set
 
-    //private val allCountries: List<Country> = DataManager.getAllCountries()
+    private val generationManager =
+        ObstacleGenerationManager(numLanes, Constants.GameLogic.TUMBLEWEEDS_PER_ROW)
+
+    val tumbleweeds: Array<Array<Boolean>> = generationManager.generateTumbleweeds(numRows)
 
     var cowboyIndex: Int = 0
         private set
@@ -12,11 +18,8 @@ class GameManager(private val lifeCount: Int = 3, private val numLanes: Int = 3)
     var timesHit: Int = 0
         private set
 
-//    val currentCountry: Country
-//        get() = allCountries[currentIndex]
-//
-//    val isGameEnded: Boolean
-//        get() = currentIndex == allCountries.size
+    private val nextRow : Array<Boolean>
+        get() = generationManager.currentRow
 
     val isGameOver: Boolean
         get() = timesHit == lifeCount
@@ -25,24 +28,33 @@ class GameManager(private val lifeCount: Int = 3, private val numLanes: Int = 3)
         if (cowboyIndex+1 < numLanes) {
             cowboyIndex++
         }
+
     }
 
     fun moveLeft() {
         if (cowboyIndex-1 >= 0) {
             cowboyIndex--
         }
+
     }
 
-    fun checkAnswer(expected: Boolean) {
-        //check answer and add score
-//        if (expected == currentCountry.canEnter)
-//            score += Constants.GameLogic.ANSWER_POINTS;
+    fun calcHit(): Boolean {
+        if (tumbleweeds[tumbleweeds.size-1][cowboyIndex]) {
+            timesHit++
+            return true
+        }
+        else {
+            score += Constants.GameLogic.DODGE_POINTS
+        }
+        return false
+    }
 
-        //else: add 1 to wrong answers
-//        else
-//            wrongAnswers++
-
-        //go to next index
-        cowboyIndex++
+    fun advanceTumbleweeds() {
+        for (i in numRows-1 downTo 1) {
+            for (j in 0 until numLanes) {
+                tumbleweeds[i][j] = tumbleweeds[i-1][j]
+            }
+        }
+        tumbleweeds[0] = nextRow
     }
 }
