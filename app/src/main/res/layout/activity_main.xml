@@ -42,6 +42,18 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        tools:text="1000"
+        android:id="@+id/main_LBL_score"
+        android:textSize="@dimen/default_text_size"
+        android:textStyle="bold"
+        android:layout_margin="@dimen/default_margin"
+        tools:ignore="RtlHardcoded" />
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -116,7 +128,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:layout_below="@id/main_LLC_hearts">
+        android:layout_below="@id/main_LBL_score">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"

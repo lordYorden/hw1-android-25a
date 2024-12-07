@@ -13,6 +13,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import com.example.a25a_hw1.logic.GameManager
 import com.example.a25a_hw1.utilities.Constants
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textview.MaterialTextView
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,10 +21,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var main_FAB_left : FloatingActionButton
     private lateinit var main_IMG_cowboys: Array<AppCompatImageView>
     private lateinit var main_IMG_hearts : Array<AppCompatImageView>
-
+    private lateinit var main_LBL_score: MaterialTextView
     private lateinit var main_IMG_tumbleweeds : Array<Array<AppCompatImageView>>
     private lateinit var gameManager: GameManager
     private var numRows: Int = 0
+
 
     val handler: Handler = Handler(Looper.getMainLooper())
 
@@ -61,16 +63,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun moveLeft() {
         gameManager.moveLeft()
-        updateUI()
+        updateCowboy()
     }
 
     private fun moveRight() {
         gameManager.moveRight()
-        updateUI()
+        updateCowboy()
     }
 
     private fun initTumbleweeds() {
-        displayTumbleweeds()
+        updateTumbleweeds()
 
         for (i in main_IMG_tumbleweeds[main_IMG_tumbleweeds.size-1].indices) {
             main_IMG_tumbleweeds[main_IMG_tumbleweeds.size-1][i].visibility = View.INVISIBLE
@@ -82,14 +84,18 @@ class MainActivity : AppCompatActivity() {
             main_IMG_hearts[main_IMG_hearts.size - gameManager.timesHit].visibility = View.INVISIBLE
         }
 
-        displayCowboy()
-        displayTumbleweeds()
+        updateCowboy()
+        updateTumbleweeds()
 
         val isHit = gameManager.calcHit()
 
         if (isHit) {
             Toast.makeText(this, "Hit", Toast.LENGTH_SHORT).show()
             vibratePhone()
+        }
+
+        main_LBL_score.text = buildString {
+            append(gameManager.score)
         }
 
         if (gameManager.isGameOver) {
@@ -108,7 +114,7 @@ class MainActivity : AppCompatActivity() {
         vibrator.vibrate(VibrationEffect.createOneShot(Constants.GameLogic.VIBRATION_DURATION, VibrationEffect.DEFAULT_AMPLITUDE))
     }
 
-    private fun displayTumbleweeds() {
+    private fun updateTumbleweeds() {
         val tumbleweeds = gameManager.tumbleweeds
         for (i in tumbleweeds.indices) {
             for (j in tumbleweeds[i].indices) {
@@ -122,7 +128,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun displayCowboy() {
+    private fun updateCowboy() {
         for (i in main_IMG_cowboys.indices) {
             if (i == gameManager.cowboyIndex) {
                 main_IMG_cowboys[i].visibility = View.VISIBLE
@@ -196,5 +202,6 @@ class MainActivity : AppCompatActivity() {
 
         main_FAB_right = findViewById(R.id.main_FAB_right)
         main_FAB_left = findViewById(R.id.main_FAB_left)
+        main_LBL_score = findViewById(R.id.main_LBL_score)
     }
 }
