@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import com.example.a25a_hw1.logic.GameManager
+import com.example.a25a_hw1.logic.SettingsManager
 import com.example.a25a_hw1.utilities.Constants
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textview.MaterialTextView
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     private val runnable: Runnable =  object : Runnable{
         override fun run() {
-            handler.postDelayed(this, Constants.GameLogic.DELAY)
+            startTimer()
             gameManager.advanceTumbleweeds()
             updateUI()
         }
@@ -56,7 +57,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startTimer() {
-        handler.postDelayed(runnable, Constants.GameLogic.DELAY)
+        handler.postDelayed(runnable, SettingsManager.Difficulty.delay)
     }
 
     private fun moveLeft() {
