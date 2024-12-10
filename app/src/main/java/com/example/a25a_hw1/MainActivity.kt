@@ -53,8 +53,6 @@ class MainActivity : AppCompatActivity() {
         main_FAB_left.setOnClickListener({v -> moveLeft()})
         initTumbleweeds()
         updateUI()
-
-        startTimer()
     }
 
     private fun startTimer() {
@@ -73,16 +71,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun initTumbleweeds() {
         updateTumbleweeds()
-
-        for (i in main_IMG_tumbleweeds[main_IMG_tumbleweeds.size-1].indices) {
-            main_IMG_tumbleweeds[main_IMG_tumbleweeds.size-1][i].visibility = View.INVISIBLE
-        }
+        startTimer()
     }
 
     private fun updateUI() {
-        if (gameManager.timesHit != 0) {
-            main_IMG_hearts[main_IMG_hearts.size - gameManager.timesHit].visibility = View.INVISIBLE
-        }
+        updateHearts()
 
         updateCowboy()
         updateTumbleweeds()
@@ -90,7 +83,7 @@ class MainActivity : AppCompatActivity() {
         val isHit = gameManager.calcHit()
 
         if (isHit) {
-            Toast.makeText(this, "Hit", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "You need to Dodge better!", Toast.LENGTH_SHORT).show()
             vibratePhone()
         }
 
@@ -99,9 +92,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (gameManager.isGameOver) {
-            Toast.makeText(this, "Game Over", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Game Over!", Toast.LENGTH_SHORT).show()
             stopTimer()
             changeActivity("Game Over!\nYour Score was:", gameManager.score)
+        }
+    }
+
+    private fun updateHearts() {
+        if (gameManager.timesHit != 0) {
+            main_IMG_hearts[gameManager.timesHit-1].visibility = View.INVISIBLE
         }
     }
 

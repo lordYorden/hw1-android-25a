@@ -11,4 +11,5 @@
     <dimen name="logo_height">280dp</dimen>
     <dimen name="logo_margin">100dp</dimen>
     <dimen name="small_text_size">15sp</dimen>
+    <dimen name="weed_margin">5dp</dimen>
 </resources>

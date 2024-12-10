@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
+    android:layoutDirection="ltr"
     android:background="@color/background">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -103,7 +104,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:layoutDirection="ltr"
         android:layout_margin="@dimen/default_margin"
         android:layout_above="@id/main_LLC_cowboys"
         android:contentDescription="@string/arrow_left"
@@ -117,7 +117,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
-        android:layoutDirection="ltr"
         android:layout_above="@id/main_LLC_cowboys"
         android:layout_alignParentRight="true"
         android:clickable="true"
@@ -136,6 +135,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_margin="@dimen/weed_margin"
             android:layout_weight="1">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -179,6 +179,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_margin="@dimen/weed_margin"
             android:layout_weight="1">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -222,6 +223,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_margin="@dimen/weed_margin"
             android:layout_weight="1">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -265,6 +267,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_margin="@dimen/weed_margin"
             android:layout_weight="1">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -307,6 +310,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/weed_margin"
             android:layout_weight="1"
             android:orientation="vertical">
 
