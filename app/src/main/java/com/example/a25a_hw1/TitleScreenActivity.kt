@@ -38,7 +38,9 @@ class TitleScreenActivity : AppCompatActivity() {
     }
 
     private fun enterSettings() {
-        Toast.makeText(this, "Settings not implemented yet", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "Settings not implemented yet", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this@TitleScreenActivity, SettingsActivity::class.java)
+        startActivity(intent)
     }
 
     private fun startGame() {
