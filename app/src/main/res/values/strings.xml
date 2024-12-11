@@ -5,4 +5,14 @@
     <string name="restart_button_text">Restart?</string>
     <string name="game_title">Sheriff Dodge</string>
     <string name="back_to_titles">No, I want to go back to the title screen</string>
+    <string name="settings_difficulty_text">Select your Difficulty:</string>
+    <string name="settings_speed_text">Select the speed:</string>
+    <string name="settings_save_text">Save Changes</string>
+
+    <string-array name="settings_ARR_difficulty_levels">
+        <item>Infinitely Easy</item>
+        <item>Way Too Easy</item>
+        <item>Too Easy</item>
+        <item>Easy</item>
+    </string-array>
 </resources>

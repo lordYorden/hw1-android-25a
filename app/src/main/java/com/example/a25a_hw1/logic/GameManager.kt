@@ -8,7 +8,7 @@ class GameManager(private val lifeCount: Int = 3, private val numLanes: Int = 5,
         private set
 
     private val generationManager =
-        ObstacleGenerationManager(numLanes, Constants.GameLogic.TUMBLEWEEDS_PER_ROW)
+        ObstacleGenerationManager(numLanes, SettingsManager.Difficulty.tumbleweedsPerRow)
 
     val tumbleweeds: Array<Array<Boolean>> = generationManager.generateTumbleweeds(numRows)
 
