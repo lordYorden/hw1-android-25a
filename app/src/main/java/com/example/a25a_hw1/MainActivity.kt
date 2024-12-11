@@ -13,6 +13,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import com.example.a25a_hw1.logic.GameManager
 import com.example.a25a_hw1.logic.SettingsManager
 import com.example.a25a_hw1.utilities.Constants
+import com.example.a25a_hw1.utilities.SignalManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textview.MaterialTextView
 
@@ -84,7 +85,7 @@ class MainActivity : AppCompatActivity() {
         val isHit = gameManager.calcHit()
 
         if (isHit) {
-            Toast.makeText(this, "You need to Dodge better!", Toast.LENGTH_SHORT).show()
+            toast("You need to Dodge better!")
             vibratePhone()
         }
 
@@ -93,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (gameManager.isGameOver) {
-            Toast.makeText(this, "Game Over!", Toast.LENGTH_SHORT).show()
+            toast("Game Over!")
             stopTimer()
             changeActivity("Game Over!\nYour Score was:", gameManager.score)
         }
@@ -115,8 +116,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun vibratePhone() {
-        val vibrator = this.getSystemService(VIBRATOR_SERVICE) as Vibrator
-        vibrator.vibrate(VibrationEffect.createOneShot(Constants.GameLogic.VIBRATION_DURATION, VibrationEffect.DEFAULT_AMPLITUDE))
+        SignalManager.getInstance().vibrate(Constants.GameLogic.VIBRATION_DURATION)
+    }
+
+    private fun toast(text: String){
+        SignalManager.getInstance().toast(text)
     }
 
     private fun updateTumbleweeds() {
