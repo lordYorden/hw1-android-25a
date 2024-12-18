@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">25A-HW1</string>
+    <string name="app_name">Sheriff Dodge</string>
     <string name="arrow_left">arrow_left</string>
     <string name="arrow_right">arrow_right</string>
     <string name="restart_button_text">Restart?</string>

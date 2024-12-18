@@ -58,7 +58,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@id/main_FAB_left"
         android:id="@+id/main_LLC_cowboys">
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -66,35 +66,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@drawable/cowboy_small"/>
+            app:srcCompat="@drawable/cowboy_jump_small"/>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/main_IMG_cowboy2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:srcCompat="@drawable/cowboy_small"/>
+            app:srcCompat="@drawable/cowboy_jump_small"/>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/main_IMG_cowboy3"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:srcCompat="@drawable/cowboy_small"/>
+            app:srcCompat="@drawable/cowboy_jump_small"/>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/main_IMG_cowboy4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@drawable/cowboy_small"/>
+            app:srcCompat="@drawable/cowboy_jump_small"/>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/main_IMG_cowboy5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@drawable/cowboy_small"/>
+            app:srcCompat="@drawable/cowboy_jump_small"/>
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -105,7 +105,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:layout_margin="@dimen/default_margin"
-        android:layout_above="@id/main_LLC_cowboys"
+       android:layout_alignParentBottom="true"
         android:contentDescription="@string/arrow_left"
         android:layout_alignParentLeft="true"
         app:srcCompat="@drawable/arrow_left"
@@ -117,7 +117,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
-        android:layout_above="@id/main_LLC_cowboys"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:clickable="true"
         android:contentDescription="@string/arrow_right"

@@ -39,7 +39,7 @@ class GameManager(private val lifeCount: Int = 3, private val numLanes: Int = 5,
     }
 
     fun calcHit(): Boolean {
-        if (tumbleweeds[tumbleweeds.size-1][cowboyIndex]) {
+        if (tumbleweeds[tumbleweeds.size-1 - Constants.GameLogic.COWBOY_ROW_END_OFFSET][cowboyIndex]) {
             timesHit++
             return true
         }
