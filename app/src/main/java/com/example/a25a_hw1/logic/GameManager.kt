@@ -1,5 +1,6 @@
 package com.example.a25a_hw1.logic
 
+import com.example.a25a_hw1.model.Obstacle
 import com.example.a25a_hw1.model.ObstacleGenerationManager
 import com.example.a25a_hw1.utilities.Constants
 
@@ -8,9 +9,9 @@ class GameManager(private val lifeCount: Int = 3, private val numLanes: Int = 5,
         private set
 
     private val generationManager =
-        ObstacleGenerationManager(numLanes, SettingsManager.Difficulty.tumbleweedsPerRow)
+        ObstacleGenerationManager(numLanes, SettingsManager.Difficulty.tumbleweedsPerRow, this)
 
-    val tumbleweeds: Array<Array<Boolean>> = generationManager.generateTumbleweeds(numRows)
+    val tumbleweeds: Array<Array<Obstacle>> = generationManager.generateTumbleweeds(numRows)
 
     var cowboyIndex: Int = 0
         private set
@@ -18,7 +19,7 @@ class GameManager(private val lifeCount: Int = 3, private val numLanes: Int = 5,
     var timesHit: Int = 0
         private set
 
-    private val nextRow : Array<Boolean>
+    private val nextRow : Array<Obstacle>
         get() = generationManager.currentRow
 
     val isGameOver: Boolean
@@ -31,6 +32,19 @@ class GameManager(private val lifeCount: Int = 3, private val numLanes: Int = 5,
 
     }
 
+    fun heal(){
+        if (timesHit > 0)
+            timesHit--
+    }
+
+    fun collectCoin(){
+        score += Constants.GameLogic.COIN_POINTS
+    }
+
+    fun hit(){
+        timesHit++
+    }
+
     fun moveLeft() {
         if (cowboyIndex-1 >= 0) {
             cowboyIndex--
@@ -39,9 +53,11 @@ class GameManager(private val lifeCount: Int = 3, private val numLanes: Int = 5,
     }
 
     fun calcHit(): Boolean {
-        if (tumbleweeds[tumbleweeds.size-1 - Constants.GameLogic.COWBOY_ROW_END_OFFSET][cowboyIndex]) {
-            timesHit++
-            return true
+
+        val obsInWay: Obstacle = tumbleweeds[tumbleweeds.size-1 - Constants.GameLogic.COWBOY_ROW_END_OFFSET][cowboyIndex]
+
+        if (obsInWay.isVisible) {
+            return obsInWay.collisionCallback.onCollision()
         }
         else {
             score += Constants.GameLogic.DODGE_POINTS

@@ -101,8 +101,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateHearts() {
-        if (gameManager.timesHit != 0) {
-            main_IMG_hearts[gameManager.timesHit-1].visibility = View.INVISIBLE
+        for (i in main_IMG_hearts.indices) {
+            if (i < gameManager.timesHit) {
+                main_IMG_hearts[i].visibility = View.INVISIBLE
+            } else {
+                main_IMG_hearts[i].visibility = View.VISIBLE
+            }
         }
     }
 
@@ -127,8 +131,9 @@ class MainActivity : AppCompatActivity() {
         val tumbleweeds = gameManager.tumbleweeds
         for (i in tumbleweeds.indices) {
             for (j in tumbleweeds[i].indices) {
-                if (tumbleweeds[i][j]) {
+                if (tumbleweeds[i][j].isVisible) {
                     main_IMG_tumbleweeds[i][j].visibility = View.VISIBLE
+                    main_IMG_tumbleweeds[i][j].setImageResource(tumbleweeds[i][j].resID)
                 }
                 else {
                     main_IMG_tumbleweeds[i][j].visibility = View.INVISIBLE

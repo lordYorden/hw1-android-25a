@@ -13,4 +13,5 @@
     <dimen name="small_text_size">15sp</dimen>
     <dimen name="weed_margin">5dp</dimen>
     <dimen name="min_height_spinner">48dp</dimen>
+    <dimen name="obstacle_height">320dp</dimen>
 </resources>
