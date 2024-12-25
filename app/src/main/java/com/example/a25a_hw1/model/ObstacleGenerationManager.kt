@@ -35,12 +35,11 @@ class ObstacleGenerationManager(private val numLanes: Int, private val tumblewee
         for (i in 1..tumbleweedsPerRow) {
             val rand = (1..numLanes).random()
 
-            val randType = (1..3).random()
+            val randType = (1..7).random()
 
             val obs: Obstacle = when(randType){
-                2 -> generateHeart()
-                1 -> generateCoin()
-                3 -> generateWeed()
+                1 -> generateHeart()
+                2 -> generateCoin()
                 else -> generateWeed()
             }
 

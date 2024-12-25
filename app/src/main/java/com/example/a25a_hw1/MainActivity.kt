@@ -10,12 +10,18 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.lifecycle.lifecycleScope
 import com.example.a25a_hw1.logic.GameManager
 import com.example.a25a_hw1.logic.SettingsManager
+import com.example.a25a_hw1.utilities.BackgroundMusicPlayer
 import com.example.a25a_hw1.utilities.Constants
 import com.example.a25a_hw1.utilities.SignalManager
+import com.example.a25a_hw1.utilities.SingleSoundPlayer
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textview.MaterialTextView
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,15 +35,17 @@ class MainActivity : AppCompatActivity() {
     private var numRows: Int = 0
 
 
-    val handler: Handler = Handler(Looper.getMainLooper())
+    //val handler: Handler = Handler(Looper.getMainLooper())
+    private var timerOn: Boolean = false
+    private lateinit var timerJob: Job
 
-    private val runnable: Runnable =  object : Runnable{
-        override fun run() {
-            startTimer()
-            gameManager.advanceTumbleweeds()
-            updateUI()
-        }
-    }
+//    private val runnable: Runnable =  object : Runnable{
+//        override fun run() {
+//            startTimer()
+//            gameManager.advanceTumbleweeds()
+//            updateUI()
+//        }
+//    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,9 +65,9 @@ class MainActivity : AppCompatActivity() {
         updateUI()
     }
 
-    private fun startTimer() {
-        handler.postDelayed(runnable, SettingsManager.Difficulty.delay)
-    }
+//    private fun startTimer() {
+//        handler.postDelayed(runnable, SettingsManager.Difficulty.delay)
+//    }
 
     private fun moveLeft() {
         gameManager.moveLeft()
@@ -86,6 +94,7 @@ class MainActivity : AppCompatActivity() {
 
         if (isHit) {
             toast("You need to Dodge better!")
+            SingleSoundPlayer(this).playSound(R.raw.gun_shot)
             vibratePhone()
         }
 
@@ -110,13 +119,37 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+//    private fun stopTimer() {
+//        handler.removeCallbacks(runnable)
+//    }
+
     private fun stopTimer() {
-        handler.removeCallbacks(runnable)
+        timerOn = false
+        timerJob.cancel()
     }
 
-    override fun onStop() {
-        super.onStop()
+    private fun startTimer() {
+        if (!timerOn) {
+            timerOn = true
+            timerJob = lifecycleScope.launch {
+                while (timerOn) {
+                    gameManager.advanceTumbleweeds()
+                    updateUI()
+                    delay(SettingsManager.Difficulty.delay)
+                }
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
         stopTimer()
+        BackgroundMusicPlayer.getInstance().pauseMusic()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        BackgroundMusicPlayer.getInstance().playMusic()
     }
 
     private fun vibratePhone() {
