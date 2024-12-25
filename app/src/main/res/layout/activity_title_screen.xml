@@ -14,7 +14,7 @@
         android:layout_height="@dimen/logo_height"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/logo_margin"
-        android:src="@drawable/app_icon_large"/>
+        android:src="@drawable/cowboy_logo"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/title_LBL_title"

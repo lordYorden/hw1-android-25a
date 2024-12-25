@@ -6,4 +6,8 @@
     <color name="background">#BBDEFB</color>
     <color name="text_color">#000000</color>
 
+    <color name="teal">#4DB6AC</color>
+    <color name="blue">#64B5F6</color>
+    <color name="purple">#9575CD</color>
+
 </resources>
