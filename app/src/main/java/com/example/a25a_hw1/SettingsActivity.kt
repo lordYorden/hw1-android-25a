@@ -10,12 +10,16 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.a25a_hw1.logic.SettingsManager
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.slider.Slider
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var settings_SPN_difficulty: Spinner
     private lateinit var settings_SLD_speed: Slider
     private lateinit var settings_BTN_save: MaterialButton
+
+
+    private lateinit var settings_SWITCH_tilt: MaterialSwitch
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,12 +34,14 @@ class SettingsActivity : AppCompatActivity() {
         super.onResume()
         settings_SPN_difficulty.setSelection(SettingsManager.Difficulty.tumbleweedsPerRow-1)
         settings_SLD_speed.value = SettingsManager.Difficulty.delay.toFloat()
+        settings_SWITCH_tilt.isChecked = SettingsManager.Sensors.usingTilt
     }
 
     private fun findViews() {
         settings_SPN_difficulty = findViewById(R.id.settings_SPN_difficulty)
         settings_SLD_speed = findViewById(R.id.settings_SLD_speed)
         settings_BTN_save = findViewById(R.id.settings_BTN_save)
+        settings_SWITCH_tilt = findViewById(R.id.settings_SWITCH_tilt)
     }
 
     private fun initViews() {
@@ -49,6 +55,10 @@ class SettingsActivity : AppCompatActivity() {
                 // Do nothing
             }
         }
+
+        settings_SWITCH_tilt.setOnClickListener({ v ->
+            SettingsManager.Sensors.usingTilt = settings_SWITCH_tilt.isChecked
+        })
 
         settings_BTN_save.setOnClickListener({v -> finish()})
     }

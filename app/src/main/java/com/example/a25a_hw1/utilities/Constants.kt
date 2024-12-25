@@ -12,6 +12,11 @@ class Constants {
         const val COWBOY_ROW_END_OFFSET = 1
     }
 
+    object Sensors {
+        const val USING_TILT = false
+        const val SAMPLE_RATE = 250
+    }
+
     object BundleKeys {
         const val SCORE_KEY:String = "SCORE_KEY"
         const val STATUS_KEY :String = "STATUS_KEY"
