@@ -149,6 +149,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        startTimer()
         BackgroundMusicPlayer.getInstance().playMusic()
     }
 
