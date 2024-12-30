@@ -15,6 +15,10 @@ class Constants {
     object Sensors {
         const val USING_TILT = false
         const val SAMPLE_RATE = 250
+        const val UP_DELAY_MODIFIER = 50
+        const val DOWN_DELAY_MODIFIER = 20
+        const val MAX_UP_SPEED = -200
+        const val MAX_DOWN_SPEED = 200
     }
 
     object BundleKeys {

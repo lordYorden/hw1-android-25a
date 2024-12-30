@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     private var timerOn: Boolean = false
     private lateinit var timerJob: Job
+    private var speedOffset: Int = 0;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,11 +85,15 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun tiltUp() {
-                    //pass
+                    speedOffset -= Constants.Sensors.UP_DELAY_MODIFIER
+                    speedOffset.coerceAtLeast(Constants.Sensors.MAX_UP_SPEED)
+                    //Log.i("tilt", "up $speedOffset")
                 }
 
                 override fun tiltDown() {
-                    //pass
+                    speedOffset += Constants.Sensors.DOWN_DELAY_MODIFIER
+                    speedOffset.coerceAtMost(Constants.Sensors.MAX_DOWN_SPEED)
+                    //Log.i("tilt", "down $speedOffset")
                 }
 
             }
@@ -156,7 +162,7 @@ class MainActivity : AppCompatActivity() {
                 while (timerOn) {
                     gameManager.advanceTumbleweeds()
                     updateUI()
-                    delay(SettingsManager.Difficulty.delay)
+                    delay(SettingsManager.Difficulty.delay + speedOffset)
                 }
             }
         }

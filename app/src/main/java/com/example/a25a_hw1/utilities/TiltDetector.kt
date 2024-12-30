@@ -47,9 +47,13 @@ class TiltDetector(context: Context, private val tiltCallback: TiltCallback?) {
                 tiltCallback?.tiltRight()
             }
 
-//            if (abs(y) >= 3.0) {
-//                tiltCallback?.tiltY()
-//            }
+            if (y >= 5.0) {
+                tiltCallback?.tiltDown()
+            }
+
+            if (y <= -1.0){
+                tiltCallback?.tiltUp()
+            }
         }
     }
 
