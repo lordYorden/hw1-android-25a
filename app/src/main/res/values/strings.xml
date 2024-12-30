@@ -8,6 +8,8 @@
     <string name="settings_difficulty_text">Select your Difficulty:</string>
     <string name="settings_speed_text">Select the speed:</string>
     <string name="settings_save_text">Save Changes</string>
+    <string name="send">Send</string>
+    <string name="hint">Please Enter Location</string>
 
     <string-array name="settings_ARR_difficulty_levels">
         <item>Infinitely Easy</item>
