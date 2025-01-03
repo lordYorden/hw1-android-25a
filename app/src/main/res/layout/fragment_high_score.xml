@@ -10,7 +10,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:visibility="gone">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/highScore_ET_location"
@@ -33,6 +34,7 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:padding="@dimen/default_margin"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

@@ -1,41 +1,37 @@
 package com.example.a25a_hw1
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.a25a_hw1.adapters.ScoreboardAdapter
 import com.example.a25a_hw1.fragments.HighScoreFragment
 import com.example.a25a_hw1.interfaces.Callback_HighScoreItemClicked
+import com.example.a25a_hw1.interfaces.LocationUpdatedCallback
 import com.example.a25a_hw1.logic.ScoreManger
 import com.example.a25a_hw1.utilities.Constants
+import com.example.a25a_hw1.utilities.LocationDetector
 import com.example.a25a_hw1.utilities.SignalManager
 import com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapColorScheme
 import com.google.android.gms.maps.model.MarkerOptions
 import com.vmadalin.easypermissions.EasyPermissions
-import com.vmadalin.easypermissions.annotations.AfterPermissionGranted
 import com.vmadalin.easypermissions.models.PermissionRequest
 
 class GameOverActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
 
-    /*    private lateinit var GameOver_LBL_score: MaterialTextView
-        private lateinit var GameOver_BTN_restart: MaterialButton
-        private lateinit var GameOver_LBL_title_screen: MaterialTextView*/
     private lateinit var score_FRAME_list: FrameLayout
     private lateinit var score_FRAME_map: FrameLayout
 
     private lateinit var highScoreFragment: HighScoreFragment
     private lateinit var mapFragment: SupportMapFragment
     private var googleMap: GoogleMap? = null
+    private var hasLocationPerms: Boolean = false
+    private lateinit var locationDetector: LocationDetector
+    private var score: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,14 +43,18 @@ class GameOverActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
 
     override fun onResume() {
         super.onResume()
+        handleLocationPerm()
+        if (hasLocationPerms){
+            locationDetector.startLocationUpdates()
 
-//        val bundle: Bundle? = intent.extras
-//        addNewScore(bundle, 32.0, 34.0)
+            val bundle = intent.extras ?: Bundle()
+            score = bundle.getInt("SCORE_KEY", 0)
+        }
     }
 
-    private fun checkLocationAndAddScore(){
+    private fun handleLocationPerm(){
         if (EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)){
-            addLocationScore()
+            onLocationGranted()
         }
         else{
             val request = PermissionRequest.Builder(this)
@@ -65,33 +65,44 @@ class GameOverActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
         }
     }
 
-    private fun addLocationScore() {
+    override fun onPause() {
+        super.onPause()
+        ScoreManger.getInstance().save()
+        locationDetector.stopLocationUpdates()
+    }
+
+    private fun onLocationGranted(){
+        hasLocationPerms = true
+        enableGoogleMapsLocation()
+    }
+
+    private fun addScore(score: Int, lat: Double, lon: Double) {
+        if (this.score == 0) return
+
+        ScoreManger.getInstance().scores[score.toString()] = LatLng(lat, lon)
+        highScoreFragment.updateHighScore()
+
+        this.score = 0
+    }
+
+    private fun enableGoogleMapsLocation() {
         try {
             googleMap?.isMyLocationEnabled = true
         } catch (e: SecurityException){
             e.printStackTrace()
         }
-
-        highScoreFragment.updateHighScore()
     }
-
-    private fun addNewScore(bundle: Bundle?, lat: Double, lng: Double) {
-        val score = bundle?.getInt("SCORE_KEY", 0)
-        score?.let { ScoreManger.getInstance().scores.put(it.toString(), LatLng(lat, lng))}
-    }
-
-
-
-    override fun onPause() {
-        super.onPause()
-        ScoreManger.getInstance().save()
-    }
-
 
 
     private fun initViews() {
 
         mapFragment = SupportMapFragment.newInstance()
+        locationDetector = LocationDetector(this, object : LocationUpdatedCallback{
+            override fun onLocationUpdated(latitude: Double, longitude: Double) {
+                addScore(score, latitude, longitude)
+            }
+
+        })
 
         supportFragmentManager
             .beginTransaction()
@@ -109,7 +120,7 @@ class GameOverActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
                 ) ?: return
 
                 googleMap?.animateCamera(
-                    newLatLngZoom(LatLng(lat, lon), 8f)
+                    newLatLngZoom(LatLng(lat, lon), 14f)
                 ) ?: return
             }
         }
@@ -124,7 +135,7 @@ class GameOverActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
             p0.uiSettings.isMapToolbarEnabled = true
             p0.uiSettings.isZoomControlsEnabled = true
             googleMap = p0
-            checkLocationAndAddScore()
+            handleLocationPerm()
         }
 
     }
@@ -142,9 +153,6 @@ class GameOverActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
     }
 
     private fun findViews() {
-        /*        GameOver_LBL_score = findViewById(R.id.GameOver_LBL_score)
-                GameOver_BTN_restart = findViewById(R.id.GameOver_BTN_restart)
-                GameOver_LBL_title_screen = findViewById(R.id.GameOver_LBL_title_screen)*/
         score_FRAME_list = findViewById(R.id.score_FRAME_list)
         score_FRAME_map = findViewById(R.id.score_FRAME_map)
     }
@@ -163,7 +171,7 @@ class GameOverActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
     override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
 
         if(requestCode == Constants.Permission.LOCATION_REQUEST_CODE){
-
+            onLocationGranted()
         }
 
     }
