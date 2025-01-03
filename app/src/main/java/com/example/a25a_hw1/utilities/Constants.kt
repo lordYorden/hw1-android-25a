@@ -16,4 +16,13 @@ class Constants {
         const val SCORE_KEY:String = "SCORE_KEY"
         const val STATUS_KEY :String = "STATUS_KEY"
     }
+
+    object SP_keys {
+        const val SCOREBOARD_KEY: String = "SCOREBOARD_KEY"
+    }
+
+    object Permission {
+        const val LOCATION_REQUEST_CODE: Int = 20
+    }
+
 }
