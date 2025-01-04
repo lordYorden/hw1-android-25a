@@ -80,7 +80,8 @@ class GameOverActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
         if (this.score == 0) return
 
         ScoreManger.getInstance().scores[score.toString()] = LatLng(lat, lon)
-        highScoreFragment.updateHighScore()
+
+        highScoreFragment.updateHighScore(ScoreManger.getInstance().scores.size-1)
 
         this.score = 0
     }

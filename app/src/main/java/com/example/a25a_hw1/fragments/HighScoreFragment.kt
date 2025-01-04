@@ -1,5 +1,6 @@
 package com.example.a25a_hw1.fragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,15 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 import com.example.a25a_hw1.R
 import com.example.a25a_hw1.adapters.ScoreboardAdapter
 import com.example.a25a_hw1.interfaces.Callback_HighScoreItemClicked
 import com.example.a25a_hw1.logic.ScoreManger
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
-import java.util.Objects
 
 class HighScoreFragment : Fragment() {
 
@@ -47,20 +45,24 @@ class HighScoreFragment : Fragment() {
         // Inflate the layout for this fragment
         val v = inflater.inflate(R.layout.fragment_high_score, container, false)
         findViews(v)
-        initViews(v, container)
+        initViews(container?.context)
         return v
     }
 
-    private fun initViews(v: View, container: ViewGroup?) {
+    private fun initViews(context: Context?) {
+
+        if (context == null){
+            return
+        }
 
         scoreboardAdapter.itemCallback = highScoreItemClicked
-        highScore_RV_scoreboard.layoutManager = LinearLayoutManager(container?.context)
+        highScore_RV_scoreboard.layoutManager = LinearLayoutManager(context)
         highScore_RV_scoreboard.adapter = scoreboardAdapter
 
-        highScore_BTN_send.setOnClickListener { v:View ->
-            var coordinates = highScore_ET_location.text?.split(",")
-            var lat: Double = coordinates?.get(0)?.toDouble()?: 0.0
-            var lon: Double = coordinates?.get(1)?.toDouble()?: 0.0
+        highScore_BTN_send.setOnClickListener { _:View ->
+            val coordinates = highScore_ET_location.text?.split(",")
+            val lat: Double = coordinates?.get(0)?.toDouble()?: 0.0
+            val lon: Double = coordinates?.get(1)?.toDouble()?: 0.0
 
             itemClicked(lat, lon)
         }
@@ -76,7 +78,7 @@ class HighScoreFragment : Fragment() {
         highScore_RV_scoreboard = v.findViewById(R.id.highScore_RV_scoreboard)
     }
 
-    fun updateHighScore(){
-        scoreboardAdapter.notifyDataSetChanged()
+    fun updateHighScore(position: Int){
+        scoreboardAdapter.notifyItemChanged(position)
     }
 }
