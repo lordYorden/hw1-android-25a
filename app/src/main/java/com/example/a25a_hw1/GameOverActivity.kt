@@ -93,7 +93,6 @@ class GameOverActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
         }
     }
 
-
     private fun initViews() {
 
         mapFragment = SupportMapFragment.newInstance()
