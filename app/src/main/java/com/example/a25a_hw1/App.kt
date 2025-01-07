@@ -3,9 +3,7 @@ package com.example.a25a_hw1
 import android.app.Application
 import com.example.a25a_hw1.logic.ScoreManger
 import com.example.a25a_hw1.utilities.BackgroundMusicPlayer
-import com.example.a25a_hw1.utilities.Constants
 import com.example.a25a_hw1.utilities.SignalManager
-import com.paz.prefy_lib.Prefy
 
 class App : Application() {
     override fun onCreate() {
@@ -13,7 +11,6 @@ class App : Application() {
         SignalManager.init(this)
         BackgroundMusicPlayer.init(this)
         BackgroundMusicPlayer.getInstance().setResourceId(R.raw.background_music)
-        Prefy.init(this, false)
         ScoreManger.init(this)
         //Prefy.getInstance().remove(Constants.SP_keys.SCOREBOARD_KEY)
         ScoreManger.getInstance().load()

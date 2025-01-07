@@ -9,6 +9,7 @@ import com.example.a25a_hw1.fragments.HighScoreFragment
 import com.example.a25a_hw1.interfaces.Callback_HighScoreItemClicked
 import com.example.a25a_hw1.interfaces.LocationUpdatedCallback
 import com.example.a25a_hw1.logic.ScoreManger
+import com.example.a25a_hw1.model.Score
 import com.example.a25a_hw1.utilities.Constants
 import com.example.a25a_hw1.utilities.LocationDetector
 import com.example.a25a_hw1.utilities.SignalManager
@@ -79,10 +80,9 @@ class GameOverActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
     private fun addScore(score: Int, lat: Double, lon: Double) {
         if (this.score == 0) return
 
-        ScoreManger.getInstance().scores[score.toString()] = LatLng(lat, lon)
-
-        highScoreFragment.updateHighScore(ScoreManger.getInstance().scores.size-1)
-
+        ScoreManger.getInstance().scores.add(Score(score, lat, lon))
+        ScoreManger.getInstance().sortScores()
+        highScoreFragment.updateHighScore()
         this.score = 0
     }
 

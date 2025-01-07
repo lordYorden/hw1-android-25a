@@ -13,12 +13,16 @@ class Constants {
     }
 
     object BundleKeys {
-        const val SCORE_KEY:String = "SCORE_KEY"
-        const val STATUS_KEY :String = "STATUS_KEY"
+        const val SCORE_KEY: String = "SCORE_KEY"
+        const val STATUS_KEY: String = "STATUS_KEY"
     }
 
     object SP_keys {
         const val SCOREBOARD_KEY: String = "SCOREBOARD_KEY"
+    }
+
+    object ScoreDisplay {
+        const val NUM_OF_SCORES_DISPLAYED: Int = 10
     }
 
     object Permission {

@@ -1,5 +1,6 @@
 package com.example.a25a_hw1.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -78,7 +79,8 @@ class HighScoreFragment : Fragment() {
         highScore_RV_scoreboard = v.findViewById(R.id.highScore_RV_scoreboard)
     }
 
-    fun updateHighScore(position: Int){
-        scoreboardAdapter.notifyItemChanged(position)
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateHighScore() {
+        scoreboardAdapter.notifyDataSetChanged()
     }
 }

@@ -1,8 +1,8 @@
 package com.example.a25a_hw1.logic
 
 import android.content.Context
+import com.example.a25a_hw1.model.Score
 import com.example.a25a_hw1.utilities.Constants
-import com.google.android.gms.maps.model.LatLng
 import com.paz.prefy_lib.Prefy
 
 class ScoreManger private constructor(context: Context){
@@ -18,36 +18,30 @@ class ScoreManger private constructor(context: Context){
         }
 
         fun init(context: Context): ScoreManger {
+            Prefy.init(context, false)
+
             return instance ?: synchronized(this) {
                 instance ?: ScoreManger(context).also { instance = it }
             }
         }
     }
 
-    var scores: MutableMap<String, LatLng> = mutableMapOf()
+    var scores: MutableList<Score> = mutableListOf()
 
     fun save(){
 
-        val prefy: Prefy = Prefy.getInstance();
+        val prefy: Prefy = Prefy.getInstance()
+        prefy.putArray(Constants.SP_keys.SCOREBOARD_KEY, scores.toTypedArray())
+    }
 
-        prefy.putArray(Constants.SP_keys.SCOREBOARD_KEY, scores.keys.toTypedArray())
-        for (score in scores){
-            prefy.putObject(score.key, score.value)
-        }
+    fun sortScores(){
+        scores.sortByDescending { s -> s.score }
     }
 
     fun load(){
-        val prefy: Prefy = Prefy.getInstance();
-
-        val default: Array<String> = arrayOf()
-//        scores.putAll(Prefy.getInstance().getHashMap(Constants.SP_keys.SCOREBOARD_KEY, HashMap()))
-        val scoreKeys = prefy.getArray(Constants.SP_keys.SCOREBOARD_KEY, default, Array<String>::class.java)
-
-        for (score in scoreKeys){
-            val key: LatLng? = prefy.getObject(score, null, LatLng::class.java)
-            key?.let {
-                scores.put(score, key)
-            }
-        }
+        val prefy: Prefy = Prefy.getInstance()
+        val default: Array<Score> = arrayOf()
+        val scoresArr = prefy.getArray(Constants.SP_keys.SCOREBOARD_KEY, default, Array<Score>::class.java)
+        scores.addAll(scoresArr)
     }
 }
