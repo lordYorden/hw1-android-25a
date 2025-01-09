@@ -39,19 +39,19 @@ class TiltDetector(context: Context, private val tiltCallback: TiltCallback?) {
         if (System.currentTimeMillis() - timestamp >= SettingsManager.Sensors.sampleRate) {//enough time has passed since last check:
             timestamp = System.currentTimeMillis()
 
-            if (x >= 3.0) {
+            if (x >= Constants.Sensors.TILT_SIDE_THRESHOLD) {
                 tiltCallback?.tiltLeft()
             }
 
-            if (x <= -3.0) {
+            if (x <= -Constants.Sensors.TILT_SIDE_THRESHOLD) {
                 tiltCallback?.tiltRight()
             }
 
-            if (y >= 5.0) {
+            if (y >= Constants.Sensors.TILT_DOWN_THRESHOLD) {
                 tiltCallback?.tiltDown()
             }
 
-            if (y <= -1.0){
+            if (y <= -Constants.Sensors.TILT_UP_THRESHOLD){
                 tiltCallback?.tiltUp()
             }
         }
