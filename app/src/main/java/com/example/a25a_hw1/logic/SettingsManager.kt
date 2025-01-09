@@ -18,4 +18,11 @@ class SettingsManager {
             tumbleweedsPerRow = num
         }
     }
+
+    object Sensors {
+        var sampleRate: Int = Constants.Sensors.SAMPLE_RATE
+            private set
+
+        var usingTilt: Boolean = Constants.Sensors.USING_TILT
+    }
 }

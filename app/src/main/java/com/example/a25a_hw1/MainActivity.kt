@@ -6,17 +6,22 @@ import android.os.Handler
 import android.os.Looper
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.lifecycle.lifecycleScope
+import androidx.transition.Visibility
+import com.example.a25a_hw1.interfaces.TiltCallback
 import com.example.a25a_hw1.logic.GameManager
 import com.example.a25a_hw1.logic.SettingsManager
 import com.example.a25a_hw1.utilities.BackgroundMusicPlayer
 import com.example.a25a_hw1.utilities.Constants
 import com.example.a25a_hw1.utilities.SignalManager
 import com.example.a25a_hw1.utilities.SingleSoundPlayer
+import com.example.a25a_hw1.utilities.TiltDetector
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textview.MaterialTextView
 import kotlinx.coroutines.Job
@@ -31,43 +36,69 @@ class MainActivity : AppCompatActivity() {
     private lateinit var main_IMG_hearts : Array<AppCompatImageView>
     private lateinit var main_LBL_score: MaterialTextView
     private lateinit var main_IMG_tumbleweeds : Array<Array<AppCompatImageView>>
+
     private lateinit var gameManager: GameManager
+    private lateinit var tiltDetector: TiltDetector
     private var numRows: Int = 0
 
-
-    //val handler: Handler = Handler(Looper.getMainLooper())
     private var timerOn: Boolean = false
     private lateinit var timerJob: Job
-
-//    private val runnable: Runnable =  object : Runnable{
-//        override fun run() {
-//            startTimer()
-//            gameManager.advanceTumbleweeds()
-//            updateUI()
-//        }
-//    }
-
+    private var speedOffset: Int = 0;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         findViews()
         numRows = main_IMG_tumbleweeds.size
+        initTiltDetector()
         initViews()
     }
 
     private fun initViews() {
         gameManager = GameManager(main_IMG_hearts.size, main_IMG_cowboys.size, numRows)
-
         main_FAB_right.setOnClickListener({v -> moveRight()})
         main_FAB_left.setOnClickListener({v -> moveLeft()})
         initTumbleweeds()
         updateUI()
     }
 
-//    private fun startTimer() {
-//        handler.postDelayed(runnable, SettingsManager.Difficulty.delay)
-//    }
+    fun showButtons(){
+        main_FAB_right.visibility = View.VISIBLE
+        main_FAB_left.visibility = View.VISIBLE
+    }
+
+    fun hideButtons(){
+        main_FAB_right.visibility = View.INVISIBLE
+        main_FAB_left.visibility = View.INVISIBLE
+    }
+
+    private fun initTiltDetector() {
+        tiltDetector = TiltDetector(
+            context = this,
+            tiltCallback = object : TiltCallback {
+                override fun tiltLeft() {
+                    moveLeft()
+                }
+
+                override fun tiltRight() {
+                    moveRight()
+                }
+
+                override fun tiltUp() {
+                    speedOffset -= Constants.Sensors.UP_DELAY_MODIFIER
+                    speedOffset.coerceAtLeast(Constants.Sensors.MAX_UP_SPEED)
+                    //Log.i("tilt", "up $speedOffset")
+                }
+
+                override fun tiltDown() {
+                    speedOffset += Constants.Sensors.DOWN_DELAY_MODIFIER
+                    speedOffset.coerceAtMost(Constants.Sensors.MAX_DOWN_SPEED)
+                    //Log.i("tilt", "down $speedOffset")
+                }
+
+            }
+        )
+    }
 
     private fun moveLeft() {
         gameManager.moveLeft()
@@ -119,10 +150,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//    private fun stopTimer() {
-//        handler.removeCallbacks(runnable)
-//    }
-
     private fun stopTimer() {
         timerOn = false
         timerJob.cancel()
@@ -135,7 +162,7 @@ class MainActivity : AppCompatActivity() {
                 while (timerOn) {
                     gameManager.advanceTumbleweeds()
                     updateUI()
-                    delay(SettingsManager.Difficulty.delay)
+                    delay(SettingsManager.Difficulty.delay + speedOffset)
                 }
             }
         }
@@ -144,12 +171,24 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         stopTimer()
+
+        if (SettingsManager.Sensors.usingTilt)
+            tiltDetector.stop()
+
         BackgroundMusicPlayer.getInstance().pauseMusic()
     }
 
     override fun onResume() {
         super.onResume()
         startTimer()
+
+        if(SettingsManager.Sensors.usingTilt){
+            tiltDetector.start()
+            hideButtons()
+        }else{
+            showButtons()
+        }
+
         BackgroundMusicPlayer.getInstance().playMusic()
     }
 
