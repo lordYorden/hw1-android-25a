@@ -64,13 +64,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/settings_BTN_save"
-            android:layout_below="@id/settings_SLD_speed"
+            android:layout_below="@id/settings_LLC_motion"
             android:text="@string/settings_save_text"
             android:textStyle="bold"
             android:layout_centerHorizontal="true"
             android:backgroundTint="@color/btn_move"
             android:textColor="@color/text_color"
             android:layout_margin="@dimen/default_margin"/>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/settings_LLC_motion"
+            android:layout_below="@id/settings_SLD_speed"
+            android:layout_margin="@dimen/default_margin">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/settings_SLD_speed"
+                android:text="Toogle Motion controls"
+                android:textColor="@color/text_color"
+                android:layout_margin="@dimen/default_margin"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_toStartOf="@id/settings_SWITCH_tilt"/>
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:layout_width="wrap_content"
+                android:id="@+id/settings_SWITCH_tilt"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/settings_SLD_speed"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </RelativeLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
