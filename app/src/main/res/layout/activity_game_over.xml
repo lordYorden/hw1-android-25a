@@ -1,46 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GameOverActivity"
-    android:background="@color/background">
+    tools:context=".MainActivity"
+    android:orientation="vertical">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:id="@+id/GameOver_LBL_score"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/GameOver_BTN_restart"
-        android:layout_centerHorizontal="true"
-        android:textSize="@dimen/game_over_text_size"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        tools:text="Game Over!\nYour Score was:\n1000"
-        android:textColor="@color/text_color"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/purple"
+        android:id="@+id/score_FRAME_list"/>
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:id="@+id/GameOver_BTN_restart"
-        android:layout_margin="@dimen/default_margin"
-        android:text="@string/restart_button_text"
-        android:textStyle="bold"
-        android:textSize="@dimen/default_text_size"
-        android:backgroundTint="@color/btn_move"
-        android:textColor="@color/text_color"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/teal"
+        android:id="@+id/score_FRAME_map"/>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:id="@+id/GameOver_LBL_title_screen"
-        android:layout_below="@id/GameOver_BTN_restart"
-        android:text="@string/back_to_titles"
-        android:textSize="@dimen/small_text_size"
-        android:backgroundTint="@color/btn_move"
-        android:textColor="@color/text_color"/>
-
-
-</RelativeLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
