@@ -18,7 +18,7 @@ Sheriff Dodge is a game built using `Kotlin 2.1.0`, designed for Android devices
 
 ### 1. Main Menu
 
-![Settings Screen](./docs/main_menu.png) | ![Settings Screen](./docs/main_menu_dark.png) 
+![Main Menu](./docs/main_menu.png) | ![Main Menu](./docs/main_menu_dark.png) 
 -|-
 
 - **Start Game** - Starts the `game loop`, with the setting selected by the user.
@@ -28,7 +28,8 @@ Sheriff Dodge is a game built using `Kotlin 2.1.0`, designed for Android devices
 
 ### 2. Settings
 
-![Settings Screen](./docs/settings_screen_dark.png)
+![Settings Screen](./docs/settings_screen.png) | ![Settings Screen](./docs/settings_screen_dark.png) 
+-|-
 
 The settings screen uses the `SettingsManager` to define `global settings` that every other class uses.
 
@@ -40,12 +41,18 @@ The settings screen uses the `SettingsManager` to define `global settings` that 
 - **Motion controls** - toggles the motion game controls. Uses `TiltDetector`. Defaults to `off`
 
 ### 3. Game
-
 - todo
 
 ### 4. Scoreboard
+![scoreboard Screen](./docs/scoreboard_srceen.png) | ![scoreboard Screen](./docs/scoreboard_screen_dark.png) 
+-|-
+ScoreManager - save the scores in the app `Shared Preference` and loads them into a list using [prefy](https://github.com/paz-lavi/Prefy.git)
 
-- todo
+Display the `top 10` scores achieved.
+- **On Score Click** - The map zooms in to where you achieved the score.
+- **Add score** Adds the score to `ScoreManager` with `FusedLocationProvider` based on current location.
+- **Location perms** - uses [EasyPermissions](https://github.com/VMadalin/easypermissions-ktx) to handle `location permissions`
+- **Maps Platform API** - uses `SupportMap` to display the map, and saves the `API token` token safely with `Gradle Secrets`
 
 ## Features
 
