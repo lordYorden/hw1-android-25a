@@ -59,6 +59,6 @@ class TitleScreenActivity : AppCompatActivity() {
     private fun startGame() {
         val intent = Intent(this@TitleScreenActivity, MainActivity::class.java)
         startActivity(intent)
-        finish()
+        //finish()
     }
 }

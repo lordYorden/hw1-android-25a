@@ -2,18 +2,10 @@ package com.example.a25a_hw1
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.VibrationEffect
-import android.os.Vibrator
-import android.util.Log
 import android.view.View
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.lifecycle.lifecycleScope
-import androidx.transition.Visibility
 import com.example.a25a_hw1.interfaces.TiltCallback
 import com.example.a25a_hw1.logic.GameManager
 import com.example.a25a_hw1.logic.SettingsManager
@@ -43,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
     private var timerOn: Boolean = false
     private lateinit var timerJob: Job
-    private var speedOffset: Int = 0;
+    private var speedOffset: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -134,7 +126,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (gameManager.isGameOver) {
-            toast("Game Over!")
+            //toast("Game Over!")
             stopTimer()
             changeActivity("Game Over!\nYour Score was:", gameManager.score)
         }

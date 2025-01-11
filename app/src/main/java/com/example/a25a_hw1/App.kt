@@ -3,7 +3,9 @@ package com.example.a25a_hw1
 import android.app.Application
 import com.example.a25a_hw1.logic.ScoreManger
 import com.example.a25a_hw1.utilities.BackgroundMusicPlayer
+import com.example.a25a_hw1.utilities.Constants
 import com.example.a25a_hw1.utilities.SignalManager
+import com.paz.prefy_lib.Prefy
 
 class App : Application() {
     override fun onCreate() {

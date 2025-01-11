@@ -3,6 +3,7 @@ package com.example.a25a_hw1
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.a25a_hw1.fragments.HighScoreFragment
@@ -33,6 +34,7 @@ class GameOverActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
     private var hasLocationPerms: Boolean = false
     private lateinit var locationDetector: LocationDetector
     private var score: Int = 0
+    private var isScoreCollected: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,22 +47,41 @@ class GameOverActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
     override fun onResume() {
         super.onResume()
         handleLocationPerm()
-        if (hasLocationPerms){
+        if (hasLocationPerms) {
             locationDetector.startLocationUpdates()
 
-            val bundle = intent.extras ?: Bundle()
-            score = bundle.getInt("SCORE_KEY", 0)
+            if(!isScoreCollected){
+                val bundle = intent.extras ?: Bundle()
+                score = bundle.getInt("SCORE_KEY", 0)
+                isScoreCollected = true
+
+                //check if there is a score on the way
+                if (score == 0 && ScoreManger.getInstance().scores.isEmpty()) {
+                    highScoreFragment.setEmptyMsg(View.VISIBLE)
+                } else {
+                    highScoreFragment.setEmptyMsg(View.GONE)
+                }
+            }
         }
     }
 
-    private fun handleLocationPerm(){
-        if (EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)){
+    private fun handleLocationPerm() {
+        if (EasyPermissions.hasPermissions(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        ) {
             onLocationGranted()
-        }
-        else{
+        } else {
             val request = PermissionRequest.Builder(this)
                 .code(Constants.Permission.LOCATION_REQUEST_CODE)
-                .perms(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION))
+                .perms(
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                )
                 .build()
             EasyPermissions.requestPermissions(this, request)
         }
@@ -72,7 +93,7 @@ class GameOverActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
         locationDetector.stopLocationUpdates()
     }
 
-    private fun onLocationGranted(){
+    private fun onLocationGranted() {
         hasLocationPerms = true
         enableGoogleMapsLocation()
     }
@@ -89,7 +110,7 @@ class GameOverActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
     private fun enableGoogleMapsLocation() {
         try {
             googleMap?.isMyLocationEnabled = true
-        } catch (e: SecurityException){
+        } catch (e: SecurityException) {
             e.printStackTrace()
         }
     }
@@ -97,7 +118,7 @@ class GameOverActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
     private fun initViews() {
 
         mapFragment = SupportMapFragment.newInstance()
-        locationDetector = LocationDetector(this, object : LocationUpdatedCallback{
+        locationDetector = LocationDetector(this, object : LocationUpdatedCallback {
             override fun onLocationUpdated(latitude: Double, longitude: Double) {
                 addScore(score, latitude, longitude)
             }
@@ -157,7 +178,11 @@ class GameOverActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
         score_FRAME_map = findViewById(R.id.score_FRAME_map)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         // EasyPermissions handles the request result.
@@ -170,7 +195,7 @@ class GameOverActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
 
     override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
 
-        if(requestCode == Constants.Permission.LOCATION_REQUEST_CODE){
+        if (requestCode == Constants.Permission.LOCATION_REQUEST_CODE) {
             onLocationGranted()
         }
 
