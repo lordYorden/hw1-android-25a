@@ -46,6 +46,7 @@ The settings screen uses the `SettingsManager` to define `global settings` that 
 ### 4. Scoreboard
 ![scoreboard Screen](./docs/scoreboard_srceen.png) | ![scoreboard Screen](./docs/scoreboard_screen_dark.png) 
 -|-
+
 ScoreManager - save the scores in the app `Shared Preference` and loads them into a list using [prefy](https://github.com/paz-lavi/Prefy.git)
 
 Display the `top 10` scores achieved.
