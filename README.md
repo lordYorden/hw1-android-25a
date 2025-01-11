@@ -9,6 +9,7 @@ A Game made as part of HW at Afeka's `Mobile Apps - 25A10357` Class.
 > To use this app, you need a valid Maps API token. Make sure to save the token safely with Gradle Secrets.
 
 - Save your `token` in the project directory under `secrets.properties`:
+
   ```properties
   MAPS_API_KEY=<Your Token>
   ```
