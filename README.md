@@ -1,9 +1,3 @@
-<style>
-td, th {
-   border: none!important;
-}
-</style>
-
 ![Logo](./docs/logo.png)
 
 # Sheriff Dodge
@@ -24,8 +18,8 @@ Sheriff Dodge is a game built using `Kotlin 2.1.0`, designed for Android devices
 
 ### 1. Main Menu
 
-| ![Settings Screen](./docs/main_menu.png) | ![Settings Screen](./docs/main_menu_dark.png) |
-|------------------------------------------|-----------------------------------------------|
+![Settings Screen](./docs/main_menu.png) | ![Settings Screen](./docs/main_menu_dark.png) 
+-|-
 
 - **Start Game** - Starts the `game loop`, with the setting selected by the user.
 - **Settings** - shows the settings screen.
