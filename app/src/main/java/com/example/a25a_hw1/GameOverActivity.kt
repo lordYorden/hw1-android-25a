@@ -34,7 +34,11 @@ class GameOverActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
     private var hasLocationPerms: Boolean = false
     private lateinit var locationDetector: LocationDetector
     private var score: Int = 0
-    private var isScoreCollected: Boolean = false
+
+    //fixed onResume rerun with extras after clear
+    private companion object{
+        var isScoreCollected: Boolean = false
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +57,7 @@ class GameOverActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
             if(!isScoreCollected){
                 val bundle = intent.extras ?: Bundle()
                 score = bundle.getInt("SCORE_KEY", 0)
+
                 isScoreCollected = true
 
                 //check if there is a score on the way
@@ -105,6 +110,7 @@ class GameOverActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
         ScoreManger.getInstance().sortScores()
         highScoreFragment.updateHighScore()
         this.score = 0
+        intent.extras?.clear()
     }
 
     private fun enableGoogleMapsLocation() {
